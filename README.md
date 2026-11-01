@@ -1,29 +1,33 @@
 # Kestrelgrab
 
-Desktop-App für Windows zum Speichern von Videos und Audio von allen Seiten, die
-[yt-dlp](https://github.com/yt-dlp/yt-dlp) unterstützt. Oberfläche auf Deutsch und Englisch, modernes Dark-Theme.
+Kestrelgrab is a Windows desktop app for saving video and audio from any site that
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) supports. It has a dark theme, and the
+interface is available in English and German.
 
-## Funktionen
+## Features
 
-- Link einfügen per Button **Einfügen**, Enter-Taste oder Drag and Drop.
-  Enthält der Text mehrere Links, landen alle direkt in der Warteschlange.
-  Fehlendes `https://` wird ergänzt.
-- Analyse mit Vorschaubild, Titel, Kanal und Dauer. Im Qualitätsmenü stehen nur Stufen,
-  die es für das Video wirklich gibt (Beste, 2160p–360p, Nur Audio).
-- Formate: Video als MP4, MKV oder WEBM, Audio als MP3, M4A, OPUS, FLAC oder WAV.
-- Warteschlange mit Fortschritt, Geschwindigkeit und Restzeit, 1–5 parallele Downloads,
-  Abbrechen, Wiederholen (Teil-Downloads werden fortgesetzt), Datei öffnen, Im Ordner zeigen.
-- Einstellungen: Sprache, Download-Ordner, Parallelität, Cookies aus dem Browser
-  (Chrome, Firefox, Edge, Brave, Opera, Vivaldi), yt-dlp-Version mit Update-Prüfung,
-  Status von ffmpeg und JS-Runtime.
-- Verständliche, übersetzte Fehlermeldungen (Anmeldung nötig, nicht unterstützt,
-  nicht verfügbar, Netzwerk, ffmpeg).
-- Audio-Dateien bekommen den Zusatz „ (audio)“ im Namen und überschreiben so kein
-  gleichnamiges Video.
+- Paste a link with the Paste button, press Enter, or drag it onto the window. If the
+  text contains several links, they all go straight into the queue. A missing
+  `https://` is added for you.
+- Analyzing a link shows the thumbnail, title, channel and duration. The quality menu
+  lists only the resolutions the video actually has (best, 2160p down to 360p, or
+  audio only).
+- Video can be saved as MP4, MKV or WEBM, audio as MP3, M4A, OPUS, FLAC or WAV.
+- The queue shows progress, speed and time left, and runs 1 to 5 downloads at once.
+  You can cancel a download, retry it (partial downloads resume), open the file, or
+  show it in Explorer.
+- In the settings you can pick the language, the download folder, how many downloads
+  run in parallel, and a browser to read cookies from (Chrome, Firefox, Edge, Brave,
+  Opera or Vivaldi). The settings also show the yt-dlp version with an update check,
+  and whether ffmpeg and a JavaScript runtime were found.
+- Errors are shown as short, translated messages: sign-in required, site not
+  supported, content unavailable, network problem, or ffmpeg failure.
+- Audio files get " (audio)" added to their name, so they never overwrite a video
+  with the same title.
 
-## Start im Dev-Modus
+## Running from source
 
-Voraussetzung: Python 3.12 (64 Bit).
+You need Python 3.12 (64-bit).
 
 ```bat
 py -3.12 -m venv .venv
@@ -32,12 +36,12 @@ py -3.12 -m venv .venv
 .venv\Scripts\python main.py
 ```
 
-**ffmpeg** wird in dieser Reihenfolge gesucht: `tools\ffmpeg.exe`, `PATH`, dann das
-mitgelieferte Binary von `imageio-ffmpeg`. Fehlt ffmpeg, zeigt die App ein Warnbanner
-und lädt Einzeldateien ohne Zusammenführen oder Umwandlung.
+The app looks for ffmpeg in `tools\ffmpeg.exe` first, then on `PATH`, and finally
+uses the binary that ships with `imageio-ffmpeg`. Without ffmpeg it shows a warning
+and downloads single files, without merging or converting them.
 
-**JS-Runtime (für YouTube):** yt-dlp braucht für YouTube eine JavaScript-Runtime.
-Gesucht wird `tools\deno.exe`, dann `deno` im `PATH`, dann `node` im `PATH`.
+YouTube downloads need a JavaScript runtime. The app looks for `tools\deno.exe`, then
+`deno` on `PATH`, then `node` on `PATH`.
 
 ### Tests
 
@@ -45,68 +49,68 @@ Gesucht wird `tools\deno.exe`, dann `deno` im `PATH`, dann `node` im `PATH`.
 .venv\Scripts\python -m pytest
 ```
 
-Die Core-Tests erzeugen per ffmpeg ein Testvideo, stellen es über einen lokalen
-`http.server` bereit und laden es über den Generic-Extractor von yt-dlp herunter
-(Video, MKV, MP3, Abbruch und Fortsetzen, Fehlerfälle). Der UI-Smoketest läuft mit
-`QT_QPA_PLATFORM=offscreen` und braucht kein sichtbares Fenster.
+The core tests use ffmpeg to create a short test video, serve it from a local
+`http.server`, and download it through yt-dlp's generic extractor. They cover video,
+MKV and MP3 downloads, cancelling and resuming, and error handling. The UI smoke test
+runs with `QT_QPA_PLATFORM=offscreen`, so no window opens.
 
-## Build
+## Building
 
 ```bat
 build.bat
 ```
 
-Das Skript legt das venv an, installiert die Abhängigkeiten, erzeugt das Icon, kopiert
-`ffmpeg.exe` (aus imageio-ffmpeg) und lädt `deno.exe` aus den offiziellen
-Deno-GitHub-Releases nach `tools\`. Danach baut PyInstaller (`--onedir`) die App nach
-`dist\Kestrelgrab\Kestrelgrab.exe`.
+The script creates the virtual environment, installs the dependencies and generates
+the icon. It copies `ffmpeg.exe` from imageio-ffmpeg and downloads `deno.exe` from the
+official Deno GitHub releases into `tools\`. PyInstaller (`--onedir`) then builds the
+app into `dist\Kestrelgrab\Kestrelgrab.exe`.
 
 ## Installer
 
-1. [Inno Setup 6](https://jrsoftware.org/isinfo.php) installieren.
-2. Nach `build.bat` die Datei `installer.iss` in Inno Setup öffnen und kompilieren, oder:
+1. Install [Inno Setup 6](https://jrsoftware.org/isinfo.php).
+2. After running `build.bat`, open `installer.iss` in Inno Setup and compile it, or run:
 
    ```bat
    "%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" installer.iss
    ```
 
-Der Installer (Deutsch/Englisch) landet in `installer\Kestrelgrab-Setup-1.0.0.exe` und legt
-einen Startmenü-Eintrag, auf Wunsch ein Desktop-Icon und einen Deinstallationseintrag an.
+The installer is written to `installer\Kestrelgrab-Setup-1.0.0.exe`. It runs in English
+or German and adds a Start menu entry, an optional desktop shortcut, and an uninstaller.
 
-## yt-dlp aktuell halten
+## Keeping yt-dlp up to date
 
-Die Seiten ändern sich oft, deshalb erscheinen regelmäßig neue yt-dlp-Versionen.
-Wenn Downloads plötzlich scheitern, ist ein Update meist die Lösung.
+Sites change often, and yt-dlp releases new versions to keep up. If downloads suddenly
+start failing, updating yt-dlp usually fixes it.
 
-- **Dev-Modus:** In den Einstellungen „Nach Updates suchen“ und dann „Jetzt aktualisieren“
-  wählen (führt `pip install -U "yt-dlp[default]"` aus), anschließend die App neu starten.
-- **Gepackte App:** Die App zeigt nur einen Hinweis auf die neue Version. Für das Update
-  `build.bat` erneut ausführen (installiert die neueste yt-dlp-Version) und den Installer
-  neu bauen.
+When running from source, open the settings, click "Check for updates" and then
+"Update now". This runs `pip install -U "yt-dlp[default]"`. Restart the app afterwards.
 
-## Rechtlicher Hinweis
+The built app only tells you that a new version exists. To update it, run `build.bat`
+again (it installs the latest yt-dlp) and rebuild the installer.
 
-Lade nur Inhalte herunter, an denen du die Rechte hast oder deren Nutzung erlaubt ist.
-Beachte die Nutzungsbedingungen der jeweiligen Plattform und das Urheberrecht.
-Kestrelgrab ist ein Werkzeug; für die Nutzung ist allein der Anwender verantwortlich.
+## Legal notice
 
-## Lizenz
+Only download content you own the rights to or are allowed to use. Follow the terms
+of service of each platform and the copyright law that applies to you. You alone are
+responsible for what you download with Kestrelgrab.
 
-Der Quellcode von Kestrelgrab steht unter der [MIT-Lizenz](LICENSE). Die gebaute App
-enthält Fremdsoftware mit eigenen Lizenzen (u. a. FFmpeg unter GPL), siehe
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Kestrelgrab steht in keiner Verbindung
-zu den Plattformen, von denen Inhalte geladen werden.
+## License
 
-## Projektstruktur
+The Kestrelgrab source code is released under the [MIT License](LICENSE). The built app
+bundles third-party software with its own licenses, including FFmpeg under the GPL.
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for details. Kestrelgrab is not
+affiliated with any of the platforms it downloads from.
+
+## Project layout
 
 ```
-main.py                 Einstiegspunkt (AppUserModelID, Icon)
-app/core.py             Download-Logik ohne Qt (testbar)
-app/workers.py          QThreads für Analyse, Downloads, Update-Check
-app/i18n.py             Deutsch/Englisch mit Live-Umschaltung
-app/settings.py         Einstellungen (QSettings)
-app/ui/                 Hauptfenster, Karten, Einstellungsdialog, Stylesheet
-assets/                 App-Icon (von tools/make_icon.py erzeugt)
-tools/                  make_icon.py sowie ffmpeg.exe/deno.exe (vom Build)
-tests/                  Core-Tests und UI-Smoketest
+main.py                 Entry point (AppUserModelID, icon)
+app/core.py             Download logic without Qt, so it can be tested directly
+app/workers.py          QThreads for analysis, downloads and the update check
+app/i18n.py             English and German strings, switchable at runtime
+app/settings.py         Settings (QSettings)
+app/ui/                 Main window, cards, settings dialog, stylesheet
+assets/                 App icon (generated by tools/make_icon.py)
+tools/                  make_icon.py, plus ffmpeg.exe and deno.exe after a build
+tests/                  Core tests and the UI smoke test
 ```
