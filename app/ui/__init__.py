@@ -1,0 +1,1 @@
+"""Qt-Oberfläche von Kestrelgrab."""
