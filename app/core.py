@@ -207,7 +207,7 @@ _ERROR_PATTERNS: list[tuple[str, tuple[str, ...]]] = [
         "was removed", "does not exist", "doesn't exist", "no longer available",
         "http error 404", "http error 410", "not found", "no video formats",
         "no video could be found", "requested format is not available",
-        "geo restricted", "blocked it in your country", "copyright",
+        "geo restricted", "blocked it in your country", "ip address is blocked", "copyright",
         "there is no video in this post",
     )),
     (ERR_NETWORK, (
@@ -664,7 +664,7 @@ def pip_update_ytdlp() -> tuple[bool, str]:
         return False, "frozen"
     flags = subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0
     proc = subprocess.run(
-        [sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp[default]"],
+        [sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp[default,curl-cffi]"],
         capture_output=True, text=True, creationflags=flags,
     )
     out = (proc.stdout or "") + (proc.stderr or "")

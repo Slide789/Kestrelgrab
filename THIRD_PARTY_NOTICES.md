@@ -12,6 +12,7 @@ installer) bundles the components below, each under its own license.
 | [FFmpeg](https://ffmpeg.org) (binary from imageio-ffmpeg) | GPL v3 (build with libx264) | https://ffmpeg.org/download.html, https://github.com/imageio/imageio-binaries |
 | [imageio-ffmpeg](https://github.com/imageio/imageio-ffmpeg) | BSD 2-Clause | https://github.com/imageio/imageio-ffmpeg |
 | [Deno](https://deno.com) | MIT | https://github.com/denoland/deno |
+| [curl_cffi](https://github.com/lexiforest/curl_cffi) (with curl-impersonate) | MIT | https://github.com/lexiforest/curl_cffi |
 | [Python](https://www.python.org) | PSF License | https://www.python.org |
 | requests, urllib3, certifi, websockets, brotli, mutagen, pycryptodomex | Apache 2.0 / MIT / MPL 2.0 / BSD / GPL v2+ / BSD (see each package) | PyPI |
 

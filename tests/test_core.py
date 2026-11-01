@@ -180,6 +180,7 @@ def test_ffmpeg_available():
     ("ERROR: [generic] Unable to download webpage: HTTP Error 404: Not Found", "unavailable"),
     ("ERROR: [generic] Unable to download webpage: <urlopen error [Errno 11001] getaddrinfo failed>", "network"),
     ("ERROR: Unable to download webpage: The read operation timed out", "network"),
+    ("ERROR: [TikTok] 123: Your IP address is blocked from accessing this post", "unavailable"),
     ("ERROR: Postprocessing: ffprobe and ffmpeg not found. Please install or provide the path", "ffmpeg"),
     ("ERROR: something completely different", "unknown"),
 ])

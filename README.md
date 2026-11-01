@@ -44,6 +44,9 @@ and downloads are saved as single files without merging or conversion.
 YouTube requires a JavaScript runtime. The app uses `tools\deno.exe` if present,
 otherwise `deno` or `node` from `PATH`.
 
+Some sites, TikTok among them, reject requests that do not come from a real browser.
+yt-dlp handles this through `curl_cffi`, which `requirements.txt` installs.
+
 ### Tests
 
 ```bat
@@ -85,7 +88,7 @@ Video sites change frequently, and yt-dlp publishes updates to follow those chan
 When downloads start failing, updating yt-dlp is usually the fix.
 
 When running from source, open the settings and use "Check for updates", then
-"Update now". This runs `pip install -U "yt-dlp[default]"`; restart the app afterwards.
+"Update now". This runs `pip install -U "yt-dlp[default,curl-cffi]"`; restart the app afterwards.
 
 The built app only reports that a new version is available. To update it, run
 `build.bat` again, which installs the latest yt-dlp, and rebuild the installer.

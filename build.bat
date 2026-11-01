@@ -48,7 +48,7 @@ echo [6/6] Baue mit PyInstaller ...
     --windowed --onedir --name Kestrelgrab --icon assets/icon.ico ^
     --add-data "assets;assets" --add-data "tools;tools" ^
     --add-data "LICENSE;." --add-data "THIRD_PARTY_NOTICES.md;." ^
-    --collect-all yt_dlp --collect-all yt_dlp_ejs --collect-all imageio_ffmpeg ^
+    --collect-all yt_dlp --collect-all yt_dlp_ejs --collect-all imageio_ffmpeg --collect-all curl_cffi ^
     --exclude-module PySide6.QtWebEngineCore --exclude-module PySide6.QtWebEngineWidgets ^
     --exclude-module PySide6.Qt3DCore --exclude-module PySide6.QtQuick --exclude-module PySide6.QtQml ^
     --exclude-module PySide6.QtPdf --exclude-module PySide6.QtMultimedia ^
